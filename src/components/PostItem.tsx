@@ -34,7 +34,7 @@ function PostItem({
           $active={isFavorite}
           onClick={() => onToggleFavorite(post)}
         >
-          담기
+          관심
         </FavoriteButton>
       </Bottom>
     </Card>
