@@ -21,6 +21,8 @@ function App() {
   const [content, setContent] = useState("");
   const [author, setAuthor] = useState("");
 
+  const [favorites, setFavorites] = useState<Post[]>([]);
+
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
@@ -56,6 +58,20 @@ function App() {
     setTitle("");
     setContent("");
     setAuthor("");
+  };
+
+  const toggleFavorite = (post: Post) => {
+    const isAlreadyFavorite = favorites.some(
+      (f) => f.id === post.id
+    );
+
+    if (isAlreadyFavorite) {
+      setFavorites(
+        favorites.filter((f) => f.id !== post.id)
+      );
+    } else {
+      setFavorites([...favorites, post]);
+    }
   };
 
   // 과제 3-3: posts.length에 따라 성공 또는 빈 상태 객체를 만드세요. 변수 타입은 PostListState로 적습니다.
@@ -96,6 +112,8 @@ function App() {
       <PostList
         state={listState}
         onSelect={setSelectedPost}
+        favorites={favorites}
+        onToggleFavorite={toggleFavorite}
       />
 
       {selectedPost === null ? (

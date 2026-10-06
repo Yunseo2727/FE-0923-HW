@@ -6,9 +6,17 @@ import type { Post, PostListState } from "../types";
 interface PostListProps {
   state: PostListState;
   onSelect: (post: Post) => void;
+
+  favorites: Post[];
+  onToggleFavorite: (post: Post) => void;
 }
 
-function PostList({ state, onSelect }: PostListProps) {
+function PostList({
+  state,
+  onSelect,
+  favorites,
+  onToggleFavorite,
+}: PostListProps) {
   if (state.status === "loading") {
     return <Message>게시글을 불러오는 중입니다.</Message>;
   }
@@ -28,6 +36,10 @@ function PostList({ state, onSelect }: PostListProps) {
           key={post.id}
           post={post}
           onSelect={onSelect}
+          isFavorite={favorites.some(
+            (f) => f.id === post.id
+          )}
+          onToggleFavorite={onToggleFavorite}
         />
       ))}
     </List>
